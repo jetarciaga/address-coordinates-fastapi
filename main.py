@@ -5,7 +5,7 @@ from routers import address
 from routers import distance
 
 app = FastAPI()
-Base.metadata.create_all(bind=engine)  # initialize database
+Base.metadata.create_all(bind=engine)  # Initialize database
 
-app.include_router(address.router)
-app.include_router(distance.router)
+app.include_router(address.router)  # Load api for path /address
+app.include_router(distance.router)  # Load api for path /distance

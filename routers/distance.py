@@ -13,6 +13,7 @@ async def get_address_area(db: DB_DEPENDENCY,
                            latitude: float=Query(le=90, ge=-90), 
                            longitude: float=Query(le=180, ge=-180),
                            distance: float=Query(gt=0)):
+
     within_distance = []
     start_point = (latitude, longitude)
     addresses = db.query(Address).all()
@@ -20,10 +21,11 @@ async def get_address_area(db: DB_DEPENDENCY,
     for address in addresses:
         address_point = (address.latitude, address.longitude)
 
+        #  Append address if it's within the provided area/distance.
         if geodesic(start_point, address_point).km <= float(distance):
             within_distance.append(address)
         
     if within_distance:
-        return {"address": within_distance}
+        return {"address": within_distance, "distance": f"{distance} km"}
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                         detail="No saved address within area")

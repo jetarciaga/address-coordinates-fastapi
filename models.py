@@ -5,6 +5,8 @@ from sqlalchemy import Column, Integer, String, DECIMAL
 
 
 class Address(Base):
+    """Describe the structure of the database table.
+    """
     __tablename__ = "coordinates"
 
     id = Column(Integer, primary_key=True)
@@ -14,6 +16,8 @@ class Address(Base):
 
 
 class AddressBase(BaseModel):
+    """Additional validation for Address model and add default value for description.
+    """
     latitude: float
     longitude: float
     description: Optional[str] = Field(None)
